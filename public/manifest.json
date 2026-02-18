@@ -1,0 +1,29 @@
+{
+    "name": "Bharat Vista 3D - Indian Heritage Experience",
+    "short_name": "Bharat Vista",
+    "description": "Explore India's magnificent monuments through immersive 3D models, 360° panoramas, and VR experiences",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#FF6B35",
+    "theme_color": "#FF6B35",
+    "orientation": "any",
+    "scope": "/",
+    "lang": "en-IN",
+    "categories": [
+        "education",
+        "travel",
+        "culture",
+        "history"
+    ],
+    "icons": [],
+    "screenshots": [],
+    "shortcuts": [],
+    "related_applications": [],
+    "prefer_related_applications": false,
+    "edge_side_panel": {
+        "preferred_width": 480
+    },
+    "launch_handler": {
+        "client_mode": "focus-existing"
+    }
+}

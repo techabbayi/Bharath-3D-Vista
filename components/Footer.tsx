@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 import { states } from '@/data/monuments';
 
 export default function Footer() {
@@ -26,14 +27,19 @@ export default function Footer() {
                             Bringing India&apos;s magnificent architectural heritage to life through immersive 3D narratives and virtual reality experiences.
                         </p>
                         <div className="flex gap-4">
-                            {['Facebook', 'Twitter', 'Instagram', 'LinkedIn'].map((social) => (
-                                <button
-                                    key={social}
+                            {[
+                                { icon: Facebook, href: '#' },
+                                { icon: Twitter, href: '#' },
+                                { icon: Instagram, href: '#' },
+                                { icon: Linkedin, href: '#' }
+                            ].map((social, i) => (
+                                <Link
+                                    key={i}
+                                    href={social.href}
                                     className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary hover:border-primary transition-all group"
-                                    title={social}
                                 >
-                                    <span className="text-[10px] font-black uppercase tracking-tighter opacity-40 group-hover:opacity-100">{social[0]}</span>
-                                </button>
+                                    <social.icon size={20} className="opacity-60 group-hover:opacity-100 text-white transition-opacity" />
+                                </Link>
                             ))}
                         </div>
                     </div>
@@ -59,10 +65,10 @@ export default function Footer() {
                     <div className="lg:col-span-2">
                         <h4 className="text-sm font-black uppercase tracking-[0.2em] text-white/40 mb-10">Navigation</h4>
                         <div className="grid grid-cols-1 gap-4">
-                            {['Discover', 'Virtual Tours', 'History', 'About Us', 'Contact'].map((link) => (
+                            {['Discover', 'Virtual Tours', 'History', 'Contribute', 'About Us', 'Contact'].map((link) => (
                                 <Link
                                     key={link}
-                                    href="/"
+                                    href={`/${link.toLowerCase().replace(' ', '-')}`}
                                     className="text-slate-400 hover:text-white font-bold transition-all"
                                 >
                                     {link}
@@ -75,13 +81,17 @@ export default function Footer() {
                     <div className="lg:col-span-2">
                         <h4 className="text-sm font-black uppercase tracking-[0.2em] text-white/40 mb-10">Heritage Policy</h4>
                         <div className="grid grid-cols-1 gap-4">
-                            {['Privacy Policy', 'Terms of Use', 'Accessibility', 'Credits'].map((link) => (
+                            {[
+                                { title: 'Privacy Policy', href: '/privacy' },
+                                { title: 'Terms and Conditions', href: '/terms' },
+                                { title: 'Credits', href: '/credits' }
+                            ].map((link) => (
                                 <Link
-                                    key={link}
-                                    href="/"
+                                    key={link.title}
+                                    href={link.href}
                                     className="text-slate-400 hover:text-white font-bold transition-all"
                                 >
-                                    {link}
+                                    {link.title}
                                 </Link>
                             ))}
                         </div>
@@ -94,6 +104,9 @@ export default function Footer() {
                     <div className="flex flex-col items-center md:items-start gap-2">
                         <p className="text-slate-500 font-bold text-sm">
                             © {currentYear} Ministry of Culture & Tourism, Govt of India (Mockup)
+                        </p>
+                        <p className="text-slate-500 text-xs font-medium">
+                            Designed & Developed by <a href="https://github.com/techabbayi" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-white transition-colors">TechAbbayi</a>
                         </p>
                         <p className="text-[10px] font-black uppercase tracking-widest text-slate-700">
                             Preserving the past for the future

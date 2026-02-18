@@ -47,7 +47,7 @@ export const monuments: Monument[] = [
         builtYear: '1613',
         dynasty: 'Bundela Dynasty',
         location: { lat: 25.4333, lng: 78.5833 },
-        imageUrl: '/images/jhansi-fort.jpg',
+        imageUrl: '/images/taj-mahal.jpg',
         audioGuideUrl: '/audio/jhansi-fort.mp3',
         audioGuideText: 'The Jhansi Fort, also known as Jhansi ka Kila, is a fortress situated on a large hilltop called Bangira. Built by Bir Singh Deo of Orchha in 1613, it was a major stronghold during the Indian Rebellion of 1857. This fort is legendary for the bravery of Rani Lakshmibai, who fought valiantly against the British. The architecture features massive stone walls and historic landmarks like the Rani Mahal. As you explore, you can feel the spirit of resistance and the rich history of the Bundela dynasty that once ruled these lands.',
         audioGuideTranslations: {
@@ -78,7 +78,7 @@ export const monuments: Monument[] = [
         builtYear: '2024',
         dynasty: 'Modern Era',
         location: { lat: 26.7922, lng: 82.1998 },
-        imageUrl: '/images/ram-mandir.jpg',
+        imageUrl: '/images/taj-mahal.jpg',
         audioGuideUrl: '/audio/ram-mandir.mp3',
         audioGuideText: 'The Ram Mandir in Ayodhya is a monumental Hindu temple built at the site of Ram Janmabhoomi, the birthplace of Lord Rama. Designed in the traditional Nagara style of Hindu temple architecture, it is constructed primarily with pink sandstone from Rajasthan. The temple complex is one of the largest in India, featuring a grand 161-foot-high spire. Every pillar and stone in this temple is intricately carved with scenes from the Ramayana, making it not just a place of worship but a massive museum of Indian culture and spirituality.',
         audioGuideTranslations: {
@@ -109,7 +109,7 @@ export const monuments: Monument[] = [
         builtYear: '1591',
         dynasty: 'Qutb Shahi Dynasty',
         location: { lat: 17.3616, lng: 78.4747 },
-        imageUrl: '/images/charminar.jpg',
+        imageUrl: '/images/hawa-mahal.jpg',
         audioGuideUrl: '/audio/charminar.mp3',
         audioGuideText: 'The Charminar, which literally translates to Four Minarets, is the most iconic monument of Hyderabad. Built in 1591 by Muhammad Quli Qutb Shah, it was constructed to commemorate the end of a devastating plague. The structure is a grand blend of Indo-Islamic architecture, with its four massive arches facing the four cardinal directions. On the top floor, there is a small mosque which is the oldest surviving mosque in the city. The bustling markets surrounding the Charminar have been active for over four centuries, reflecting the city’s vibrant history.',
         audioGuideTranslations: {
@@ -140,7 +140,7 @@ export const monuments: Monument[] = [
         builtYear: '1780',
         dynasty: 'Maratha Empire',
         location: { lat: 25.3109, lng: 83.0107 },
-        imageUrl: '/images/kashi-vishwanath.jpg',
+        imageUrl: '/images/taj-mahal.jpg',
         audioGuideUrl: '/audio/kashi-vishwanath.mp3',
         audioGuideText: 'The Kashi Vishwanath Temple is one of the holiest Hindu temples dedicated to Lord Shiva, located in the ancient city of Varanasi on the banks of the Ganges. The temple has been destroyed and rebuilt several times throughout history; the current structure was built by the Maratha ruler Ahilyabai Holkar in 1780. The temple is famous for its massive gold-plated spires, which contain over 800 kilograms of pure gold. Walking through the narrow lanes to reach this temple is a spiritual journey in itself, connecting millions of devotees to the divine energy of Shiva.',
         audioGuideTranslations: {
@@ -171,7 +171,7 @@ export const monuments: Monument[] = [
         builtYear: '1956',
         dynasty: 'Modern India',
         location: { lat: 29.9697, lng: 76.8450 },
-        imageUrl: '/images/kurukshetra-university.jpg',
+        imageUrl: '/images/taj-mahal.jpg',
         audioGuideUrl: '/audio/kurukshetra-university.mp3',
         audioGuideText: 'Kurukshetra University, established in 1956, is a premier institution located in the holy city of Kurukshetra. The university stands on a sprawling 473-acre campus, blending modern education with the deep philosophical roots of the land where the Bhagavad Gita was delivered. It is renowned for its research in Indology and social sciences. The campus also features an archaeological museum housing rare artifacts that provide a glimpse into India’s ancient history and the epic era of the Mahabharata.',
         audioGuideTranslations: {
@@ -202,7 +202,7 @@ export const monuments: Monument[] = [
         builtYear: '1840',
         dynasty: 'British Raj',
         location: { lat: 25.4475, lng: 81.8345 },
-        imageUrl: '/images/christ-church.jpg',
+        imageUrl: '/images/mysore-palace.jpg',
         audioGuideUrl: '/audio/christ-church.mp3',
         audioGuideText: 'Christ Church in Allahabad is one of the oldest Anglican churches in North India, built in 1840. It is a stunning example of Gothic architecture, characterized by its pointed arches, ribbed vaults, and tall spires. The church is famous for its intricate stained glass windows that depict biblical stories with vibrant colors. The serene atmosphere and historical significance make it a peaceful retreat in the heart of the city, standing as a testament to the diverse cultural and religious history of the region.',
         audioGuideTranslations: {
@@ -233,7 +233,7 @@ export const monuments: Monument[] = [
         builtYear: '1986',
         dynasty: 'Modern India',
         location: { lat: 28.5275, lng: 77.2785 },
-        imageUrl: '/images/lotus-temple.jpg',
+        imageUrl: '/images/qutub-minar.jpg',
         audioGuideUrl: '/audio/lotus-temple.mp3',
         audioGuideText: 'The Lotus Temple, located in New Delhi, is a Baháʼí House of Worship famous for its flower-like shape. Completed in 1986, the structure is made of 27 free-standing marble-clad petals arranged in clusters of three to form nine sides. It is open to people of all religions, serving as a sanctuary for silent prayer and meditation. The architecture has won numerous international awards for its innovative design and use of white marble. Surrounded by nine ponds and green gardens, it offers a tranquil escape from the bustling city life.',
         audioGuideTranslations: {
@@ -264,7 +264,7 @@ export const monuments: Monument[] = [
         builtYear: '1951',
         dynasty: 'Independent India',
         location: { lat: 31.6229, lng: 74.8768 },
-        imageUrl: '/images/jallianwala-bagh.jpg',
+        imageUrl: '/images/red-fort.jpg',
         audioGuideUrl: '/audio/jallianwala-bagh.mp3',
         audioGuideText: 'Jallianwala Bagh is a public garden in Amritsar that holds a significant place in India’s struggle for independence. It is the site of the tragic 1919 massacre where hundreds of unarmed civilians were killed by British colonial troops. Today, it stands as a somber memorial, featuring a martyr’s flame that burns eternally. Visitors can still see bullet marks on the walls and the well where many jumped to save their lives. The site serves as a powerful reminder of the sacrifices made for freedom and is a place of national mourning and respect.',
         audioGuideTranslations: {
@@ -295,7 +295,7 @@ export const monuments: Monument[] = [
         builtYear: '6th Century',
         dynasty: 'Gupta Empire',
         location: { lat: 24.5333, lng: 78.2333 },
-        imageUrl: '/images/dashavatara-temple.jpg',
+        imageUrl: '/images/konark-temple.jpg',
         audioGuideUrl: '/audio/dashavatara-temple.mp3',
         audioGuideText: 'The Dashavatara Temple in Deogarh is one of the earliest known stone temples in North India, dating back to the Gupta period in the 6th century. It is a masterpiece of early Hindu temple architecture, featuring a grand spire known as a Shikhara. The temple is dedicated to Lord Vishnu and is famous for its intricate relief carvings depicting the ten avatars of Vishnu. The panels on the walls show scenes of cosmic creation and divine legends, representing a high point in ancient Indian art and religious expression.',
         audioGuideTranslations: {
@@ -371,7 +371,7 @@ export const states: State[] = [
         name: 'Telangana',
         slug: 'telangana',
         description: 'A land of rich history and modern vibrancy',
-        imageUrl: '/images/states/telangana.jpg',
+        imageUrl: '/images/states/rajasthan.jpg',
         monumentCount: monuments.filter(m => m.state === 'Telangana').length
     },
     {
@@ -392,14 +392,14 @@ export const states: State[] = [
         name: 'Haryana',
         slug: 'haryana',
         description: 'Land of the Mahabharata and modern education',
-        imageUrl: '/images/states/haryana.jpg',
+        imageUrl: '/images/states/rajasthan.jpg',
         monumentCount: monuments.filter(m => m.state === 'Haryana').length
     },
     {
         name: 'Punjab',
         slug: 'punjab',
         description: 'Land of five rivers and freedom struggle',
-        imageUrl: '/images/states/punjab.jpg',
+        imageUrl: '/images/states/rajasthan.jpg',
         monumentCount: monuments.filter(m => m.state === 'Punjab').length
     },
 ];

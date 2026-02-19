@@ -8,8 +8,13 @@ interface Message {
     content: string;
 }
 
-export default function AIHeritageGuide({ monument }: { monument: Monument }) {
-    const [isOpen, setIsOpen] = useState(false);
+interface AIHeritageGuideProps {
+    monument: Monument;
+    floating?: boolean;
+}
+
+export default function AIHeritageGuide({ monument, floating = false }: AIHeritageGuideProps) {
+    const [isOpen, setIsOpen] = useState(!floating); // Auto-open when inline
     const [messages, setMessages] = useState<Message[]>([
         { role: 'ai', content: `Namaste! I am your AI Heritage Guide. I can tell you all about the history and architecture of the ${monument.name}. What would you like to know?` }
     ]);
@@ -53,9 +58,9 @@ export default function AIHeritageGuide({ monument }: { monument: Monument }) {
     };
 
     return (
-        <div className="fixed bottom-8 right-8 z-[100]">
+        <div className={floating ? "fixed bottom-6 md:bottom-8 right-6 md:right-8 z-[100]" : "relative w-full"}>
             {isOpen ? (
-                <div className="w-80 md:w-96 h-[500px] bg-white rounded-[32px] shadow-[0_20px_60px_rgba(0,0,0,0.2)] border border-slate-100 flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 duration-500">
+                <div className={`bg-white rounded-[24px] md:rounded-[32px] shadow-[0_20px_60px_rgba(0,0,0,0.2)] border border-slate-100 flex flex-col overflow-hidden ${floating ? 'w-80 md:w-96 h-[500px] animate-in slide-in-from-bottom-5 duration-500' : 'w-full h-[600px] md:h-[700px]'}`}>
                     {/* Header */}
                     <div className="bg-slate-900 p-6 flex items-center justify-between">
                         <div className="flex items-center gap-3">
@@ -67,9 +72,11 @@ export default function AIHeritageGuide({ monument }: { monument: Monument }) {
                                 <p className="text-emerald-400 text-[9px] font-bold uppercase tracking-widest">Online & Ready</p>
                             </div>
                         </div>
-                        <button onClick={() => setIsOpen(false)} className="text-white/40 hover:text-white transition-colors">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
-                        </button>
+                        {floating && (
+                            <button onClick={() => setIsOpen(false)} className="text-white/40 hover:text-white transition-colors">
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
+                            </button>
+                        )}
                     </div>
 
                     {/* Messages */}
@@ -109,20 +116,21 @@ export default function AIHeritageGuide({ monument }: { monument: Monument }) {
                         </div>
                     </div>
                 </div>
-            ) : (
+            ) : floating ? (
                 <button
                     onClick={() => setIsOpen(true)}
-                    className="group relative w-16 h-16 bg-slate-900 border-4 border-white text-white rounded-full flex items-center justify-center shadow-[0_20px_40px_rgba(0,0,0,0.3)] hover:bg-primary transition-all duration-500 hover:scale-110"
+                    className="group relative w-14 h-14 md:w-16 md:h-16 bg-slate-900 border-4 border-white text-white rounded-full flex items-center justify-center shadow-[0_20px_40px_rgba(0,0,0,0.3)] hover:bg-primary transition-all duration-500 hover:scale-110"
+                    aria-label="Open AI Heritage Guide"
                 >
-                    <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 md:w-7 md:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                     </svg>
-                    <div className="absolute top-0 right-0 w-4 h-4 bg-emerald-500 border-2 border-white rounded-full" />
-                    <div className="absolute right-full mr-4 p-3 bg-white text-slate-900 text-[10px] font-black uppercase tracking-widest whitespace-nowrap rounded-xl shadow-xl opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all">
+                    <div className="absolute top-0 right-0 w-3 h-3 md:w-4 md:h-4 bg-emerald-500 border-2 border-white rounded-full" />
+                    <div className="absolute right-full mr-3 md:mr-4 p-2 md:p-3 bg-white text-slate-900 text-[9px] md:text-[10px] font-black uppercase tracking-widest whitespace-nowrap rounded-xl shadow-xl opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all pointer-events-none">
                         Ask History Guide
                     </div>
                 </button>
-            )}
+            ) : null}
         </div>
     );
 }

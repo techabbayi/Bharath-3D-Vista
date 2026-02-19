@@ -6,7 +6,8 @@ import Footer from "@/components/Footer";
 import Script from "next/script";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { ToastProvider } from "@/components/Toast";
-import { AccessibilityProvider, AccessibilityControls } from "@/contexts/AccessibilityContext";
+import { AccessibilityProvider } from "@/contexts/AccessibilityContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import { PageLoadingBar, ScrollProgress } from "@/components/Loading";
 
 const inter = Inter({
@@ -132,36 +133,35 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <AccessibilityProvider>
-          <ThemeProvider>
-            <ToastProvider>
-              {/* Skip to main content link for accessibility */}
-              <a
-                href="#main-content"
-                className="skip-to-content sr-only focus:not-sr-only"
-              >
-                Skip to main content
-              </a>
+          <LanguageProvider>
+            <ThemeProvider>
+              <ToastProvider>
+                {/* Skip to main content link for accessibility */}
+                <a
+                  href="#main-content"
+                  className="skip-to-content sr-only focus:not-sr-only"
+                >
+                  Skip to main content
+                </a>
 
-              <PageLoadingBar />
-              <ScrollProgress />
+                <PageLoadingBar />
+                <ScrollProgress />
 
-              <Script
-                src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"
-                strategy="afterInteractive"
-              />
+                <Script
+                  src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"
+                  strategy="afterInteractive"
+                />
 
-              <Header />
+                <Header />
 
-              <main id="main-content" className="min-h-screen" role="main">
-                {children}
-              </main>
+                <main id="main-content" className="min-h-screen" role="main">
+                  {children}
+                </main>
 
-              <Footer />
-
-              {/* Accessibility Controls */}
-              <AccessibilityControls />
-            </ToastProvider>
-          </ThemeProvider>
+                <Footer />
+              </ToastProvider>
+            </ThemeProvider>
+          </LanguageProvider>
         </AccessibilityProvider>
 
         {/* Service Worker Registration for PWA */}

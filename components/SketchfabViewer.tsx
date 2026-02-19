@@ -26,12 +26,14 @@ export default function SketchfabViewer({
     const containerRef = useRef<HTMLDivElement>(null);
     const iframeRef = useRef<HTMLIFrameElement>(null);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [shouldLoad, setShouldLoad] = useState(false);
     const [api, setApi] = useState<any>(null);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [initError, setInitError] = useState<string | null>(null);
     const [showHighlights, setShowHighlights] = useState(false);
     const [isTouring, setIsTouring] = useState(false);
     const [parallaxPos, setParallaxPos] = useState({ x: 0, y: 0 });
+    const [modelReady, setModelReady] = useState(false);
 
     const vibeGradients = {
         'golden-hour': 'from-orange-500/20 via-amber-500/10 to-rose-950/60',
@@ -50,24 +52,152 @@ export default function SketchfabViewer({
         setParallaxPos({ x: x * 30, y: y * 30 });
     };
 
+    // Intersection Observer for lazy loading
     useEffect(() => {
-        const script = document.createElement('script');
-        script.src = 'https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js';
-        script.async = true;
-        script.onload = () => {
-            setIsLoaded(true);
-        };
-        script.onerror = () => {
-            setInitError('Failed to load Sketchfab viewer');
-        };
-        document.body.appendChild(script);
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setShouldLoad(true);
+                        observer.disconnect();
+                    }
+                });
+            },
+            {
+                rootMargin: '100px', // Start loading 100px before visible
+                threshold: 0.1
+            }
+        );
+
+        if (containerRef.current) {
+            observer.observe(containerRef.current);
+        }
 
         return () => {
-            if (script.parentNode) {
-                script.parentNode.removeChild(script);
-            }
+            observer.disconnect();
         };
-    }, [modelId]);
+    }, []);
+
+    useEffect(() => {
+        if (!shouldLoad) return;
+
+        // Preload and optimize script loading
+        if (!window.Sketchfab) {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.as = 'script';
+            link.href = 'https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js';
+            document.head.appendChild(link);
+
+            const script = document.createElement('script');
+            script.src = 'https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js';
+            script.async = true;
+            script.defer = true;
+            script.onload = () => {
+                setIsLoaded(true);
+            };
+            script.onerror = () => {
+                setInitError('Failed to load Sketchfab viewer');
+            };
+            document.body.appendChild(script);
+
+            return () => {
+                if (script.parentNode) {
+                    script.parentNode.removeChild(script);
+                }
+                if (link.parentNode) {
+                    link.parentNode.removeChild(link);
+                }
+            };
+        } else {
+            setIsLoaded(true);
+        }
+    }, [shouldLoad]);
+
+    // Initialize Sketchfab API and control rotation
+    useEffect(() => {
+        if (!isLoaded || !shouldLoad || !iframeRef.current || !window.Sketchfab) return;
+
+        const iframe = iframeRef.current;
+
+        // Wait for iframe to load before initializing API
+        const initializeAPI = () => {
+            const client = new window.Sketchfab(iframe);
+            let currentApi: any = null;
+
+            client.init({
+                success: (apiInstance: any) => {
+                    currentApi = apiInstance;
+                    setApi(apiInstance);
+
+                    apiInstance.start(() => {
+                        setModelReady(true);
+
+                        // Enable autospin initially
+                        apiInstance.setAutospin(0.5, () => {
+                            // After 5 seconds, stop autospin and set to optimal view
+                            setTimeout(() => {
+                                apiInstance.setAutospin(0, () => {
+                                    // Set camera to a nice frontal-angled view
+                                    apiInstance.getCameraLookAt((err: any, camera: any) => {
+                                        if (!err && camera) {
+                                            // Calculate optimal viewing angle (45-degree angle, slightly elevated)
+                                            const distance = Math.sqrt(
+                                                Math.pow(camera.position[0] - camera.target[0], 2) +
+                                                Math.pow(camera.position[1] - camera.target[1], 2) +
+                                                Math.pow(camera.position[2] - camera.target[2], 2)
+                                            );
+
+                                            const angle = Math.PI / 4; // 45 degrees
+                                            const elevation = distance * 0.3; // Slightly elevated
+
+                                            const newPosition = [
+                                                camera.target[0] + distance * Math.cos(angle),
+                                                camera.target[1] + elevation,
+                                                camera.target[2] + distance * Math.sin(angle)
+                                            ];
+
+                                            apiInstance.setCameraLookAt(
+                                                newPosition,
+                                                camera.target,
+                                                2 // 2 second transition to final position
+                                            );
+                                        }
+                                    });
+                                });
+                            }, 5000); // 5 seconds
+                        });
+                    });
+                },
+                error: (err: any) => {
+                    console.error('Sketchfab API initialization failed:', err);
+                    // Don't set error state, model might still load in iframe
+                },
+                autostart: 1,
+                preload: 1,
+                ui_stop: 0,
+                ui_hint: 0,
+                ui_help: 0,
+                ui_settings: 0,
+                ui_inspector: 0,
+                ui_infos: 0,
+                ui_watermark: 0,
+                ui_controls: 1,
+                ui_annotations: 0,
+                ui_theme: 'dark',
+                camera: 0
+            });
+        };
+
+        // Give iframe time to load before initializing API
+        const timer = setTimeout(() => {
+            initializeAPI();
+        }, 1000);
+
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [isLoaded, shouldLoad]);
 
     const startTour = () => {
         if (!api) return;
@@ -117,10 +247,12 @@ export default function SketchfabViewer({
             />
 
             {/* Loading Narrative */}
-            {!isLoaded && !initError && (
+            {(!isLoaded || !shouldLoad) && !initError && (
                 <div className="absolute inset-0 z-40 flex flex-col items-center justify-center bg-slate-950">
                     <div className="w-12 h-12 border-2 border-primary/20 border-t-primary rounded-full animate-spin mb-6" />
-                    <div className="text-white font-black uppercase tracking-[0.5em] text-[10px] animate-pulse">Architectural Synthesis</div>
+                    <div className="text-white font-black uppercase tracking-[0.5em] text-[10px] animate-pulse">
+                        {!shouldLoad ? 'Preparing Model' : 'Architectural Synthesis'}
+                    </div>
                 </div>
             )}
 
@@ -131,14 +263,17 @@ export default function SketchfabViewer({
                 </div>
             )}
 
-            <div className="absolute inset-0 z-20 transition-opacity duration-1000" style={{ opacity: isLoaded ? 1 : 0 }}>
-                <iframe
-                    ref={iframeRef}
-                    className="w-full h-full border-0 rounded-lg"
-                    allow="autoplay; fullscreen; xr-spatial-tracking; vr; accelerometer; magnetometer; gyroscope;"
-                    title={monumentName}
-                    src={`https://sketchfab.com/models/${modelId}/embed?autospin=0.5&autostart=1&preload=1&ui_controls=0&ui_infos=0&ui_watermark=0&ui_stop=0&ui_help=0&ui_settings=0&ui_vr=0&ui_fullscreen=0&ui_ar=0&ui_annotations=0&ui_theme=dark`}
-                />
+            <div className="absolute inset-0 z-20 transition-opacity duration-1000" style={{ opacity: isLoaded && shouldLoad ? 1 : 0 }}>
+                {shouldLoad && (
+                    <iframe
+                        ref={iframeRef}
+                        className="w-full h-full border-0 rounded-lg"
+                        allow="autoplay; fullscreen; xr-spatial-tracking; accelerometer; magnetometer; gyroscope"
+                        title={monumentName}
+                        loading="lazy"
+                        src={`https://sketchfab.com/models/${modelId}/embed?autostart=1&preload=1&ui_theme=dark`}
+                    />
+                )}
             </div>
 
             {/* Professional Integrated Controls */}

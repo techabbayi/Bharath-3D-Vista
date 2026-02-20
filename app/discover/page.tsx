@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Compass, Book, Camera, Mountain, Building, Crown, ArrowRight } from 'lucide-react';
-import { Card } from '@/components/ui';
+import { Card, Button } from '@/components/ui';
 import Link from 'next/link';
 
 export default function DiscoverPage() {

@@ -142,8 +142,8 @@ export default async function MonumentPage({ params }: PageProps) {
         },
         geo: {
             '@type': 'GeoCoordinates',
-            latitude: monument.coordinates?.lat || 0,
-            longitude: monument.coordinates?.lng || 0,
+            latitude: monument.location?.lat || 0,
+            longitude: monument.location?.lng || 0,
         },
         url: `https://bharatvista3d.com/monument/${id}`,
         hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(monument.name + ' ' + monument.city)}`,
